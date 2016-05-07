@@ -79,17 +79,17 @@
 +IMPLEMENT A MAP USING HASHING
   - 2^N <=>  1 << N; EX: 1<<30 <=> 2^30
   - interface MyMap<K, V>                                                   
-      +  +clear(): void                                                                     
-      +  +containsKey(Key: K): boolean                                                      
-      +  +containsValue(value: V): boolean          
-      +  +entrySet(): Set<Entry<K,V>>
-      +  +get(key: K): V
-      +  +isEmpty(): boolean
-      +  +keySet(): Set<K>
-      +  +put(key: K,value: V): V
-      +  +remove(key: K):void
-      +  +size(): int
-      +  +values(): Set<V>
+      +  +clear(): void  // O(capacity)                                                                  
+      +  +containsKey(Key: K): boolean    // O(1)                                                   
+      +  +containsValue(value: V): boolean  // O(capacity)         
+      +  +entrySet(): Set<Entry<K,V>>  // O(capacity) 
+      +  +get(key: K): V    // O(1) 
+      +  +isEmpty(): boolean     // O(1) 
+      +  +keySet(): Set<K>  // O(capacity) 
+      +  +put(key: K,value: V): V     // O(1) 
+      +  +remove(key: K):void        // O(1) 
+      +  +size(): int             // O(1) 
+      +  +values(): Set<V>  // O(capacity) 
       +  +static inner class Entry<K,V>
       +     -key: K
       +     -value: V
