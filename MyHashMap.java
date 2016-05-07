@@ -128,11 +128,11 @@ public class MyHashMap<K, V> implements MyMap<K, V>
       return builder.toString();
    }
    /** ---------------------override methods in interface---------------------------------*/
-   @Override /** Remove all of the entries from this map */ 
+   @Override /** Remove all of the entries from this map - O(capacity) */ 
    public void clear()
    {
       size =0;
-      removeEntries();
+      removeEntries();//O(capacity)
    }
    
    @Override /** Return true if the specified key is in the map - O(1)*/
@@ -276,7 +276,7 @@ public class MyHashMap<K, V> implements MyMap<K, V>
       return value;
   }
   
-  @Override /** Remove the entries for the specified key */
+  @Override /** Remove the entries for the specified key - O(1)*/
   public void remove(K key)
   {
       int bucketIndex = hash(key.hashCode());
@@ -303,7 +303,7 @@ public class MyHashMap<K, V> implements MyMap<K, V>
     return size;
   }
   
-  @Override /** Return a set consisting of the values in this map */
+  @Override /** Return a set consisting of the values in this map - O(capacity)*/
   public Set<V> values()
   {
       Set<V> set = new HashSet<>();
