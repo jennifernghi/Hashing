@@ -65,6 +65,40 @@
            - look at cells at indices (k + j*h'(key)) % N, for j >=0, that is, k% N, (k +h'(key)) % N, (k + 2h'(key)) % N, (k + 3h'(key)) % N ...
            - Secondary hash function h'(key) = q − (key % q) where q < N and q is prime
            - ex: h(key) = key % 11;  h'(key) = 7 - (key % 7);
-    + HANDLNG COLLISIONS USING SEPARATE CHAINING
+    + HANDLNG COLLISIONS USING SEPARATE CHAINING places all entries w/ the same hash index insame location, rather than finding new locations. Each location in the separate chaining uses a bucket to hold multiple entries
+      - implement a bucket using array, arraylist, linkedlist
++ LOAD FACTOR AND REHASHING
+  - load factor (lamda) measures how full a hash table is: ratio of #of elements to the size of hash table
+      + lamda = n/N where n: # of elements; N: # of locations in the hash table
+      + lamda = 0 --> hash table is empty
+      + lamda =1 --> hash table is full
+      + open addressing scheme 0<= lamda <=1 =>> should maintain lamda < 0.5
+      + chaining scheme: as lamda increase, probability increases ==>> should maintain lamda< 0.9
+      + HashMap lamda = 0.75. when lamda exceeded, u should increase hash table size and rehash all the entries in the map into a new larger hash table. ==> double the hash table size to reduce of rehashing. 
+  - rehashing: if load factor exceeded, increas has-table size and reload entries into a new larger hash table
++IMPLEMENT A MAP USING HASHING
+  - 2^N <=>  1 << N; EX: 1<<30 <=> 2^30
+  - interface MyMap<K, V>                                                   
+      +  +clear(): void                                                                     
+      +  +containsKey(Key: K): boolean                                                      
+      +  +containsValue(value: V): boolean          
+      +  +entrySet(): Set<Entry<K,V>>
+      +  +get(key: K): V
+      +  +isEmpty(): boolean
+      +  +keySet(): Set<K>
+      +  +put(key: K,value: V): V
+      +  +remove(key: K):void
+      +  +size(): int
+      +  +values(): Set<V>
+      +  +static inner class Entry<K,V>
+      +     -key: K
+      +     -value: V
+      +     +Entry(key: K, value: V)
+      +     +getkey(): K
+      +     +getValue(): V
+  - class MyHashMap<K, V> implement MyMap<K, V>
+      + +MyHashMap() //empty capactity 4 0.75
+      + +MyHashMap(capacity: int)
+      + +MyHashMap(capacity: int, loadFactorThreshold: float)
 
   
