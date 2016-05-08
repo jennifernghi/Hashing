@@ -133,12 +133,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public boolean containsKey(K key) {
-		if(get(key)==null)
-		{
-			return false;
-		}else{
-			return true;
-		}
+		return (get(key)!=null);
 	}
 
 	@Override
