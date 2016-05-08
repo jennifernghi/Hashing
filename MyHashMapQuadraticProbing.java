@@ -81,18 +81,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 			put(entry.getKey(), entry.getValue());
 		}
 	}
-	/** Hash function */
-	   private int hash(int hashcode)
-	   {
-	      return supplementalHash(hashcode) & (capacity -1);
-	      // return supplementalHash(hashCode) % capacity;
-	   }
-	   /** Ensure the hashing is evenly distributed */
-	   private static int supplementalHash(int h)
-	   {
-	      h ^= (h >>> 20) ^ (h >>> 12);
-	      return h ^ (h >>> 7) ^ (h >>> 4);
-	   }
+	
 	   
 	   
 	   private void removeEntries()
