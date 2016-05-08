@@ -150,8 +150,15 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public Set<MyMap.Entry<K, V>> entrySet() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Entry<K,V>> set = new HashSet<>();
+		for(int i=0; i< capacity; i++)
+		{
+			if(table[i]!=null)
+			{
+				set.add(table[i]);
+			}
+		}
+		return set;
 	}
 
 	@Override
@@ -168,8 +175,16 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public Set<K> keySet() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<K> set = new HashSet<>();
+		
+		for(int i=0; i< capacity; i++)
+		{
+			if(table[i]!=null)
+			{
+				set.add(table[i].getKey());
+			}
+		}
+		return set;
 	}
 
 	@Override
@@ -191,8 +206,16 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public Set<V> values() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<V> set = new HashSet<>();
+		
+		for(int i=0; i<capacity; i++)
+		{
+			if(table[i]!=null)
+			{
+				set.add(table[i].getValue());
+			}
+		}
+		return set;
 	}
 
 }
