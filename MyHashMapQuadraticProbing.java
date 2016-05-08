@@ -1,6 +1,6 @@
 import java.util.*;
 /**
- * @author Nghi Nguyen
+ * @author Nghi Nguyen aka jennifernghi
  *Implement MyMap using open addressing with quadratic probing) 
  *Create a new concrete class that implements MyMap using open addressing with quadratic probing. 
  *For simplicity, use f(key) = key % size as the hash function,
@@ -153,8 +153,21 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	@Override
 	public V get(K key) {
 		// TODO Auto-generated method stub
-		return null;
+		int indexTable = quadraticProbing();
+		if(table[indexTable]!=null)
+		{
+			return table[indexTable].getValue();
+		}else
+		{
+			return null;
+		}
 	}
+
+	private int quadraticProbing() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 	@Override
 	public boolean isEmpty() {
