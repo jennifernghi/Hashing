@@ -12,7 +12,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	private static int DEFAULT_INITIAL_CAPACITY =4;// must be a prime
 	
-	private static int MAXIMUM_CAPACITY =109;// must be a prime
+	private static int MAXIMUM_CAPACITY =997;// must be a prime
 	
 	// Current hash table capacity. Capacity is a power of 2
 	private int capacity;
@@ -35,7 +35,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	public MyHashMapQuadraticProbing(int capacity)
 	{
 		
-		if(capacity >= MAXIMUM_CAPACITY)
+		if(capacity > MAXIMUM_CAPACITY)
 		{
 			throw new RuntimeException("Exceeding maximum capacity"); 
 		}else
