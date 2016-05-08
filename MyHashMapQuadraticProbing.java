@@ -37,7 +37,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		
 		if(capacity >= MAXIMUM_CAPACITY)
 		{
-			rehash();
+			throw new RuntimeException("Exceeding maximum capacity"); 
 		}else
 		{
 			int primeCapacity = closetPrime(capacity);
