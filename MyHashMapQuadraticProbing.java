@@ -1,13 +1,13 @@
 import java.util.*;
-
 /**
  * 
- * @author Nghi Nguyen
+ * @author Nghi Nguyen aka jennifernghi
  *Implement MyMap using open addressing with quadratic probing) 
  *Create a new concrete class that implements MyMap using open addressing with quadratic probing. 
  *For simplicity, use f(key) = key % size as the hash function,
  * where size is the hash-table size. Initially, the hash-table size is 4. 
  * The table size is doubled whenever the load factor exceeds the threshold (0.5).
+ * 
  */
 public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
@@ -83,9 +83,9 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		}
 	}
 	/** Hash function */
-	   private int hash(K key)
+	   private int hash(int hashcode)
 	   {
-	      return supplementalHash(key.hashCode()) & (capacity -1);
+	      return supplementalHash(hashcode) & (capacity -1);
 	      // return supplementalHash(hashCode) % capacity;
 	   }
 	   /** Ensure the hashing is evenly distributed */
@@ -95,29 +95,62 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	      return h ^ (h >>> 7) ^ (h >>> 4);
 	   }
 	   
-	   private int getQuadraticProbingIndex(K key, K value)
-	   {
-		   int index;
-		   
-		   return index;
-	   }
 	   
+	   private void removeEntries()
+	   {
+		   for(int i=0; i< capacity; i++)
+		   {
+			   if(table[i]!=null)
+			   {
+				   table[i]=null;
+			   }
+		   }
+	   }
+	   @Override /** Return a string representation for this map */
+	   public String toString()
+	   {
+	      StringBuilder builder = new StringBuilder("[");
+	      
+	      for(int i =0; i< capacity; i++)
+	      {
+	          if(table[i]!=null)
+	          {
+	              for(Entry<K, V> entry: table)
+	              {
+	                  builder.append(entry);
+	              }
+	          }
+	      }
+	      
+	      builder.append("]");
+	      return builder.toString();
+	   }
 	/** ----------------Override methods in the interface------------*/
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		size=0;
+		removeEntries();
 	}
 
 	@Override
 	public boolean containsKey(K key) {
-		// TODO Auto-generated method stub
-		return false;
+		if(get(key)==null)
+		{
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	@Override
 	public boolean containsValue(V value) {
-		// TODO Auto-generated method stub
+		for(int i=0; i< capacity; i++)
+		{
+			if(table[i].getValue().equals(value))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
