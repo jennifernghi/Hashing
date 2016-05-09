@@ -1,6 +1,6 @@
 import java.util.*;
 /**
- * @author Nghi Nguyen aka jennifernghi
+ * @author Nghi Nguyen
  *Implement MyMap using open addressing with quadratic probing) 
  *Create a new concrete class that implements MyMap using open addressing with quadratic probing. 
  *For simplicity, use f(key) = key % size as the hash function,
@@ -26,6 +26,8 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	//Hash Table is an array, each cell is an entry with key and value
 	public Entry<K,V>[] table;
 	
+	
+	
 	public MyHashMapQuadraticProbing()
 	{
 		this(DEFAULT_INITIAL_CAPACITY);
@@ -42,6 +44,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		{
 			int primeCapacity = closetPrime(capacity);
 			table = new Entry[primeCapacity];
+			
 			size=0;
 		}
 		
@@ -67,6 +70,10 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		return true;
 	
 	}
+	
+	private int hash(K key){
+		return (key.hashCode()) % capacity;
+	}
 	/** Rehash the map */
 	private void rehash()
 	{
@@ -74,6 +81,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		
 		capacity <<=1; //Double capacity
 		table = new Entry[closetPrime(capacity)];
+		
 		size=0;
 		
 		for(Entry<K,V> entry:set)
