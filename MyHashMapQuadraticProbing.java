@@ -146,6 +146,8 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 			if(table[i].getValue().equals(value))
 			{
 				return true;
+			}else{
+				return false;
 			}
 		}
 		return false;
@@ -246,7 +248,18 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public void remove(K key) {
-		// TODO Auto-generated method stub
+		int index = hash(key);
+		int i = index;
+		int j=1;
+		do{
+			if(table[i]!=null && table[i].getKey().equals(key))
+			{
+				table[i]=null;
+				size--;
+			}else{
+				i =(i + j*j++) & (capacity -1);
+			}
+		}while(i!=index);
 		
 	}
 
@@ -284,7 +297,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	}
 	public void display()
 	{
-		for(int i=0; i< tableSize(); i++)
+		for(int i=0; i< capacity; i++)
 		{
 			if(table[i]!=null)
 			{
@@ -293,7 +306,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 			
 			if(table[i]==null)
 			{
-				System.out.print(" null ");
+				System.out.print(" [null] ");
 			}
 		}
 	}
