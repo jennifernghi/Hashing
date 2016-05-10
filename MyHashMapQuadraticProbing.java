@@ -1,6 +1,6 @@
 import java.util.*;
 /**
- * @author Nghi Nguyen
+ * @author Nghi Nguyen aka jennifernghi
  *Implement MyMap using open addressing with quadratic probing) 
  *Create a new concrete class that implements MyMap using open addressing with quadratic probing. 
  *For simplicity, use f(key) = key % size as the hash function,
@@ -10,9 +10,9 @@ import java.util.*;
  */
 public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
-	private static int DEFAULT_INITIAL_CAPACITY =4;// must be a prime
+	private static int DEFAULT_INITIAL_CAPACITY =4;
 	
-	private static int MAXIMUM_CAPACITY =997;// must be a prime
+	private static int MAXIMUM_CAPACITY =1>>10;
 	
 	// Current hash table capacity. Capacity is a power of 2
 	private int capacity;
@@ -42,7 +42,6 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 			throw new RuntimeException("Exceeding maximum capacity"); 
 		}else
 		{
-			//int primeCapacity = closetPrime(initialCapacity);
 			this.capacity = initialCapacity;
 			table = new Entry[capacity];
 			size=0;
@@ -51,26 +50,6 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		
 	}
 	
-	/*private int closetPrime(int initialCapacity)
-	{
-		while(!isPrime(initialCapacity))
-		{
-			initialCapacity++;
-		}
-		capacity = initialCapacity;
-		return capacity;
-	}
-	private boolean isPrime(int number)
-	{
-		for(int divisor =2; divisor <= (number/2); divisor++)
-		{
-			if(number % divisor ==0)
-				return false;
-		}
-		
-		return true;
-	
-	}*/
 	@Override
 	public double currentLoad()
 	{
@@ -108,25 +87,23 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 			   }
 		   }
 	   }
-	   @Override /** Return a string representation for this map */
-	   public String toString()
-	   {
-	      StringBuilder builder = new StringBuilder("[");
-	      
-	      for(int i =0; i< capacity; i++)
-	      {
-	          if(table[i]!=null)
-	          {
-	              for(Entry<K, V> entry: table)
-	              {
-	                  builder.append(entry);
-	              }
-	          }
-	      }
-	      
-	      builder.append("]");
-	      return builder.toString();
-	   }
+	   public void display()
+		{
+		   System.out.print("Entries in map: ");  
+			for(int i=0; i< capacity; i++)
+			{
+				if(table[i]!=null)
+				{
+					System.out.print(" ["+table[i].getKey() + ", "+ table[i].getValue()+"] ");
+				}
+				
+				if(table[i]==null)
+				{
+					System.out.print(" [null] ");
+				}
+			}
+		}
+	  
 	/** ----------------Override methods in the interface------------*/
 	@Override
 	public void clear() {
@@ -141,14 +118,14 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public boolean containsValue(V value) {
-		for(int i=0; i< capacity; i++)
+		
+		for(int i=0; i < capacity; i++)
 		{
-			if(table[i].getValue().equals(value))
+			if(table[i]!=null && table[i].getValue().equals(value))
 			{
 				return true;
-			}else{
-				return false;
 			}
+			
 		}
 		return false;
 	}
@@ -229,7 +206,8 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 				table[i]=entry;
 				size++;
 				return value;
-			}else{
+			}else
+			{
 				if(table[i].getKey().equals(key))
 				{
 					oldValue = table[i].getValue();
@@ -257,7 +235,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 				table[i]=null;
 				size--;
 			}else{
-				i =(i + j*j++) & (capacity -1);
+				i =(i + j*j++) & (capacity -1); //Quadratic Probing 
 			}
 		}while(i!=index);
 		
@@ -295,20 +273,6 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		
 		return table.length;
 	}
-	public void display()
-	{
-		for(int i=0; i< capacity; i++)
-		{
-			if(table[i]!=null)
-			{
-				System.out.print(" ["+table[i].getKey() + ", "+ table[i].getValue()+"] ");
-			}
-			
-			if(table[i]==null)
-			{
-				System.out.print(" [null] ");
-			}
-		}
-	}
+	
 
 }
