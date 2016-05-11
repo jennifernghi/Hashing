@@ -1,6 +1,6 @@
 import java.util.*;
 /**
- * @author Nghi Nguyen aka jennifernghi
+ * @author Nghi Nguyen
  *Implement MyMap using open addressing with quadratic probing) 
  *Create a new concrete class that implements MyMap using open addressing with quadratic probing. 
  *For simplicity, use f(key) = key % size as the hash function,
@@ -10,11 +10,11 @@ import java.util.*;
  */
 public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
-	private static int DEFAULT_INITIAL_CAPACITY =4;
+	private static int DEFAULT_INITIAL_CAPACITY =4;// hash table's initial capacity 
 	
-	private static int MAXIMUM_CAPACITY =1>>10;
+	private static int MAXIMUM_CAPACITY =1>>10;// hash table's max capacity
 	
-	// Current hash table capacity. Capacity is a power of 2
+	// Current hash table capacity. 
 	private int capacity;
 	
 	// Specify a load factor used in the hash table
@@ -24,7 +24,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	private int size =0;
 	
 	//Hash Table is an array, each cell is an entry with key and value
-	public Entry<K,V>[] table;
+	private Entry<K,V>[] table;
 	
 	
 	
@@ -50,12 +50,8 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		
 	}
 	
-	@Override
-	public double currentLoad()
-	{
-		double currentLoad = ((double)size / (double)capacity);
-		return currentLoad;
-	}
+	
+	/** hash function */
 	private int hash(K key){
 		return (key.hashCode()) % capacity;
 	}
@@ -63,60 +59,41 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	private void rehash()
 	{
 		Set<Entry<K,V>> set = entrySet();//copies all the entry into set
-		
 		capacity <<=1; //Double capacity
-		table = new Entry[capacity];
-		
-		size=0;
+		table = new Entry[capacity];// new table with new capacity
+		size=0;//no entry in the table now
 		
 		for(Entry<K,V> entry:set)
 		{
-			put(entry.getKey(), entry.getValue());
+			put(entry.getKey(), entry.getValue());//distribute copied entries in the set into the new table
 		}
 	}
-	
-	   
-	   
+		
+	   /** Remove all entries in the table*/	
 	   private void removeEntries()
 	   {
 		   for(int i=0; i< capacity; i++)
 		   {
 			   if(table[i]!=null)
 			   {
-				   table[i]=null;
+				   table[i]=null; 
 			   }
 		   }
 	   }
-	   public void display()
-		{
-		   System.out.print("Entries in map: ");  
-			for(int i=0; i< capacity; i++)
-			{
-				if(table[i]!=null)
-				{
-					System.out.print(" ["+table[i].getKey() + ", "+ table[i].getValue()+"] ");
-				}
-				
-				if(table[i]==null)
-				{
-					System.out.print(" [null] ");
-				}
-			}
-		}
-	  
+	   
 	/** ----------------Override methods in the interface------------*/
-	@Override
+	@Override/** clear all entries in the map*/
 	public void clear() {
 		size=0;
 		removeEntries();
 	}
 
-	@Override
+	@Override /** Return true if the specified key is in the map - O(1)*/
 	public boolean containsKey(K key) {
 		return (get(key)!=null);
 	}
 
-	@Override
+	@Override/** Return true if this map contains the value  - O(capacity)*/ 
 	public boolean containsValue(V value) {
 		
 		for(int i=0; i < capacity; i++)
@@ -130,7 +107,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		return false;
 	}
 
-	@Override
+	@Override/** Return a set of entries in the map - O(capacity)*/
 	public Set<MyMap.Entry<K, V>> entrySet() {
 		Set<Entry<K,V>> set = new HashSet<>();
 		for(int i=0; i< capacity; i++)
@@ -143,9 +120,9 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		return set;
 	}
 
-	@Override
+	@Override/** Return the value that matches the specified key - O(1)*/
 	public V get(K key) {
-		int index =hash(key);
+		int index =hash(key);// get index by hash function
 		int i = index;
 		int j=1;
 		do
@@ -156,11 +133,11 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 				{
 					return table[i].getValue();
 				}else{
-					i = (i+ j*j++) & (capacity -1);
+					i = (i+ j*j++) & (capacity -1); // Quadratic probing
 				}
 			}else if(table[i]==null) //if there is any element just removed
 			{
-				i = (i+ j*j++) & (capacity -1);
+				i = (i+ j*j++) & (capacity -1); // Quadratic probing
 			}
 			
 		}while(i!=index);
@@ -168,7 +145,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		return null;
 	}
 
-	@Override
+	@Override/** Return true if this map contains no entries */
 	public boolean isEmpty() {
 		
 		return size ==0;
@@ -245,8 +222,6 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	public int size() {
 		return size;
 	}
-	
-	
 
 	@Override
 	public Set<V> values() {
@@ -262,7 +237,6 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		return set;
 	}
 
-
 	@Override
 	public int capacity() {
 		
@@ -273,6 +247,29 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 		
 		return table.length;
 	}
+	@Override/** return current load of hash table by taking size/capacity */
+	public double currentLoad()
+	{
+		double currentLoad = ((double)size / (double)capacity);
+		return currentLoad;
+	}
+	@Override /** Display the hash table*/
+	   public void display()
+		{
+		   System.out.print("Entries in map: ");  
+			for(int i=0; i< capacity; i++)
+			{
+				if(table[i]!=null)
+				{
+					System.out.print(" ["+table[i].getKey() + ", "+ table[i].getValue()+"] ");
+				}
+				
+				if(table[i]==null)
+				{
+					System.out.print(" [null] ");
+				}
+			}
+		}
 	
 
 }
