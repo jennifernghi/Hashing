@@ -6,7 +6,7 @@
  */
 
 public class MyHashMapQuadraticProbingTest {
-	public static void main(String[] args) {
+public static void main(String[] args) {
 		 MyMap<Integer, String> map = new MyHashMapQuadraticProbing<>();
 		 	map.put(0, "0000000");
 		 	map.put(4, "four");
@@ -34,7 +34,14 @@ public class MyHashMapQuadraticProbingTest {
 		    System.out.println();
 		    System.out.println("Remove key 0: ");map.remove(0);
 		    System.out.print("Now the hash table ");  
-		    map.display();	    
+		    map.display();
+		    System.out.println();
+		    System.out.print("Clear the map: "); 
+		    map.clear();
+		    System.out.println();
+		    System.out.print("Is the hash table empty now? " + map.isEmpty());  
+		    System.out.println();
+		    map.display();
 	}
 }
 /*
@@ -57,4 +64,7 @@ Remove key 12:
 Now the hash table Entries in map:  [0, zero]  [8, eight]  [null]  [null]  [4, four]  [null]  [null]  [null] 
 Remove key 0: 
 Now the hash table Entries in map:  [null]  [8, eight]  [null]  [null]  [4, four]  [null]  [null]  [null] 
+Clear the map: 
+Is the hash table empty now? true
+Entries in map:  [null]  [null]  [null]  [null]  [null]  [null]  [null]  [null] 
  */
