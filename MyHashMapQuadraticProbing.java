@@ -52,9 +52,14 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 	
 	
 	/** hash function */
-	private int hash(K key){
-		return (key.hashCode()) % capacity;
+	private int hash(int hashCode){
+		return supplementalHash(hashCode) & (capacity -1);
 	}
+	 /** Ensure the hashing is evenly distributed */
+	  private static int supplementalHash(int h) {
+	    h ^= (h >>> 20) ^ (h >>> 12);
+	    return h ^ (h >>> 7) ^ (h >>> 4);
+	  }
 	/** Rehash the map */
 	private void rehash()
 	{
@@ -122,7 +127,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override/** Return the value that matches the specified key - O(1)*/
 	public V get(K key) {
-		int index =hash(key);// get index by hash function
+		int index =hash(key.hashCode());// get index by hash function
 		int i = index;
 		int j=1;
 		do
@@ -167,7 +172,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public V put(K key, V value) {
-		int index = hash(key);
+		int index = hash(key.hashCode());
 		int i=index;
 		int j=1;
 		V oldValue;
@@ -181,6 +186,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 			if(table[i]==null)
 			{	
 				table[i]=entry;
+				
 				size++;
 				return value;
 			}else
@@ -203,7 +209,7 @@ public class MyHashMapQuadraticProbing<V, K> implements MyMap<K, V> {
 
 	@Override
 	public void remove(K key) {
-		int index = hash(key);
+		int index = hash(key.hashCode());
 		int i = index;
 		int j=1;
 		do{
